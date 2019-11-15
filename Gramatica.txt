@@ -14,3 +14,13 @@ colors: BLACK | BLUE | GREEN | RED
 styles: NORMAL | UNDERLINED | BOLD | ITALIC
 
 Alignments: CENTER | LEFT | RIGTH
+
+
+metodos para:
+program
+regla
+definicion
+varconf 
+colors string
+styles string
+alignments string

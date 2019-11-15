@@ -19,21 +19,29 @@ public class Parser {
 	}
 	
 	public Program parse () {
+		
 		Program p = null;
 		List<Regla> reglas = new ArrayList<Regla>();
 		Token token = lex.getToken();
+		
 		while(token.getToken() == TokensId.id) {
 			lex.returnLastToken();
 			Regla regla = parseRegla();
+			
 			if(regla != null && !errorSint) {
 				reglas.add(regla);
 			}
+		}
+		
+		if(token.getToken() != TokensId.EOF) {
+			errorSintactico(token.getLexeme(), token.getLine());
 		}
 		return p;
 	}
 	
 	private Regla parseRegla () {
 		Regla r = null;
+		
 		return r;
 	}
 	
@@ -45,6 +53,18 @@ public class Parser {
 	private Definicion parseVarConf () {
 		Definicion d = null;
 		return d;
+	}
+	
+	private String colors() {
+		return null;
+	}
+	
+	private String styles() {
+		return null;
+	}
+	
+	private String alignments() {
+		return null;
 	}
 
 	//Gestión de Errores Sintáctico
