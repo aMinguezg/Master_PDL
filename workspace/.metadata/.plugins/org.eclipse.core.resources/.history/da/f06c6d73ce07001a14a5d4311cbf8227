@@ -1,0 +1,11 @@
+package com.compiladores.web.css.visitor;
+
+public interface Visitor {
+	Object visit(Program p,  Object param);
+	
+	Object visit(Regla r,  Object param);
+	
+	Object visit(Param p,  Object param);
+	
+
+}

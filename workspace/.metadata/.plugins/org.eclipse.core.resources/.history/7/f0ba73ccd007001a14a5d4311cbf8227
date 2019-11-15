@@ -1,0 +1,23 @@
+package com.compiladores.web.css.ast;
+
+import java.util.List;
+
+import com.compiladores.web.css.visitor.Visitor;
+
+public class Regla  implements AstCss{
+
+	public List<Definicion> definicion;
+	
+	public Regla(List<Definicion> definicion) {
+		this.definicion = definicion;
+	}
+	
+	@Override
+	public Object accpet(Visitor v, Object param) {
+		// TODO Auto-generated method stub
+		return v.visit(this, param);
+	}
+
+	
+	
+}

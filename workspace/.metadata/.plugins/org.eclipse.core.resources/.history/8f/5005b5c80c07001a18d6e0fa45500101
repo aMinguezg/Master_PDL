@@ -1,0 +1,19 @@
+package com.compiladores.web.css.parser;
+
+public enum TokensId {
+	EOF, 
+	espacio, 
+	id,
+	llave,
+	black, 
+	blue, 
+	green, 
+	red, 
+	center, 
+	rigth, 
+	left, 
+	normal, 
+	italic, 
+	bold, 
+	underlined
+}

@@ -1,0 +1,5 @@
+package com.compiladores.web.css.parser;
+
+public enum TokensId {
+	EOF
+}
