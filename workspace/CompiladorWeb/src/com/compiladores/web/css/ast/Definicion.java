@@ -6,14 +6,16 @@ import com.compiladores.web.css.visitor.Visitor;
 
 public class Definicion  implements AstCss{
 
-	public List<String> atributo;
+	public String label;
+	public String value;
 	
-	public Definicion(List<String> atributo) {
-		this.atributo = atributo;
+	public Definicion(String label, String value) {
+		this.label = label;
+		this.value = value;
 	}
 	
 	@Override
-	public Object accpet(Visitor v, Object param) {
+	public Object accept(Visitor v, Object param) {
 		// TODO Auto-generated method stub
 		return v.visit(this, param);
 	}

@@ -1,6 +1,6 @@
-package simpleCss.visitor;
+package com.compiladores.web.css.visitor;
 
-import simpleCss.ast.*;
+import com.compiladores.web.css.ast.*;
 
 public class PrintCssAstVisitor implements Visitor {
 	String sp = "   ";
@@ -8,7 +8,7 @@ public class PrintCssAstVisitor implements Visitor {
 	@Override
 	public Object visit(Program p, Object param) {
 		String sd = "", sr;
-		for (Decl d : p.decls) {
+		for (Regla d : p.regla) {
 			sd = sd + (String) d.accept (this,sp);
 		}
 		sr = "(CSS declarations\n"+ sd + ")";
@@ -16,18 +16,19 @@ public class PrintCssAstVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(Decl d, Object param) {
+	public Object visit(Regla r, Object param) {
 		String spar = "", sr;
-		for (Param p : d.params) {
+		for (Definicion p : r.definicion) {
 			spar = spar + (String) p.accept (this,(String) param+sp);
 		}
-		sr = (String) param + "(" + d.ident + "\n" + spar + (String) param + ")\n";
+		sr = (String) param + "(" + r.id + "\n" + spar + (String) param + ")\n";
 		return sr;
+		
 	}
 
 	@Override
-	public Object visit(Param p, Object param) {
-		return (String) param + p.label + " --> " + p.value + "\n";
+	public Object visit(Definicion d, Object param) {
+		return (String) param + d.label + " --> " + d.value + "\n";
 	}
 
 }

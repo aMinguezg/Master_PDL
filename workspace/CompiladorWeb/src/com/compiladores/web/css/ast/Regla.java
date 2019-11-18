@@ -15,7 +15,7 @@ public class Regla  implements AstCss{
 	}
 	
 	@Override
-	public Object accpet(Visitor v, Object param) {
+	public Object accept(Visitor v, Object param) {
 		// TODO Auto-generated method stub
 		return v.visit(this, param);
 	}

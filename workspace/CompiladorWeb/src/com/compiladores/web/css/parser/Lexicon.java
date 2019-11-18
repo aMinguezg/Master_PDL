@@ -26,7 +26,10 @@ public class Lexicon {
 				valor=nextChar();
 				switch(valor) {
 				case '{':
-					tokens.add(new Token(TokensId.llave, "{", line));
+					tokens.add(new Token(TokensId.llaveOpen, "{", line));
+					break;
+				case '}':
+					tokens.add(new Token(TokensId.llaveClose, "}", line));
 					break;
 				case ':':
 					tokens.add(new Token(TokensId.colon, ":", line));
