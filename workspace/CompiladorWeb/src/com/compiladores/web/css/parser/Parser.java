@@ -56,7 +56,17 @@ public class Parser {
 	}
 	
 	private String colors() {
-		return null;
+		Token token = lex.getToken();
+		
+		switch (token.lexeme) {
+		case "BLACK":
+			
+			break;
+
+		default:
+			break;
+		}
+		
 	}
 	
 	private String styles() {
