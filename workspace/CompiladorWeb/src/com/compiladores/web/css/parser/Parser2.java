@@ -1,4 +1,4 @@
-package com.compiladores.web.css.parser;
+/*package com.compiladores.web.css.parser;
 
 import com.compiladores.web.css.ast.AstCss;
 import com.compiladores.web.css.ast.Definicion;
@@ -126,4 +126,4 @@ public class Parser {
 		errorSint = true;
 		System.out.println("Error Sintáctico : "+e+" en la línea "+line);
 	}
-}
+}*/
