@@ -2,6 +2,10 @@ package com.compiladores.web.html.parser;
 
 import java.io.FileReader;
 import java.util.*;
+
+import com.compiladores.web.html.parser.Token;
+import com.compiladores.web.html.parser.TokensId;
+
 import java.io.*;
 
 public class Lexicon {
@@ -25,17 +29,176 @@ public class Lexicon {
 			while(valor!=(char) -1){
 				valor=nextChar();
 				switch(valor) {
-				case '{':
-					tokens.add(new Token(TokensId.llaveOpen, "{", line));
-					break;
-				case '}':
-					tokens.add(new Token(TokensId.llaveClose, "}", line));
-					break;
-				case ':':
-					tokens.add(new Token(TokensId.colon, ":", line));
-					break;
-				case ';':
-					tokens.add(new Token(TokensId.semiColon, ";", line));
+				case '<':
+					char sig = nextChar();
+					switch(sig) {
+					case 'h':
+						String lexemah = getTextId(String.valueOf(sig));
+						switch(lexemah) {
+						case "<html>": 
+							tokens.add(new Token(TokensId.HTMLOPEN, lexemah, line));
+							break;
+						case "<head>":
+							tokens.add(new Token(TokensId.HEADOPEN, lexemah, line));
+							break;
+						case "<h1>":
+							tokens.add(new Token(TokensId.H1OPEN, lexemah, line));
+							break;
+						case "<h2>":
+							tokens.add(new Token(TokensId.H2OPEN, lexemah, line));
+							break;
+						default:
+							//error
+							break;
+						}
+						break;
+					case 't':
+						String lexemat = getTextId(String.valueOf(sig));
+						if(lexemat.equals("<title>")) {
+							tokens.add(new Token(TokensId.TITLEOPEN, lexemat, line));
+						}
+						else {
+							//error
+						}
+						break;
+					case 'l':
+						String lexemal = getTextId(String.valueOf(sig));
+						if(lexemal.equals("<link>")) {
+							tokens.add(new Token(TokensId.LINKOPEN, lexemal, line));
+						}
+						else {
+							//error
+						}
+						break;
+					case 'b':
+						String lexemab = getTextId(String.valueOf(sig));
+						if(lexemab.equals("<body>")) {
+							tokens.add(new Token(TokensId.BODYOPEN, lexemab, line));
+						}
+						else if(lexemab.equals("<b>")) {
+							tokens.add(new Token(TokensId.BOPEN, lexemab, line));
+						}
+						else {
+							//error
+						}
+						break;
+					case 'p':
+						String lexemap = getTextId(String.valueOf(sig));
+						if(lexemap.equals("<p>")) {
+							tokens.add(new Token(TokensId.POPEN, lexemap, line));
+						}
+						else {
+							//error
+						}
+						break;
+					case 'i':
+						String lexemai = getTextId(String.valueOf(sig));
+						if(lexemai.equals("<i>")) {
+							tokens.add(new Token(TokensId.IOPEN, lexemai, line));
+						}
+						else {
+							//error
+						}
+						break;
+					case 'u':
+						String lexemau = getTextId(String.valueOf(sig));
+						if(lexemau.equals("<u>")) {
+							tokens.add(new Token(TokensId.UOPEN, lexemau, line));
+						}
+						else {
+							//error
+						}
+						break;
+					case '/':
+						char sigClose = nextChar();
+						switch(sig) {
+						case 'h':
+							String lexemahClose = getTextId(String.valueOf(sigClose));
+							switch(lexemahClose) {
+							case "<html>": 
+								tokens.add(new Token(TokensId.HTMLCLOSE, lexemahClose, line));
+								break;
+							case "<head>":
+								tokens.add(new Token(TokensId.HEADCLOSE, lexemahClose, line));
+								break;
+							case "<h1>":
+								tokens.add(new Token(TokensId.H1CLOSE, lexemahClose, line));
+								break;
+							case "<h2>":
+								tokens.add(new Token(TokensId.H2CLOSE, lexemahClose, line));
+								break;
+							default:
+								//error
+								break;
+							}
+							break;
+						case 't':
+							String lexematClose = getTextId(String.valueOf(sigClose));
+							if(lexematClose.equals("<title>")) {
+								tokens.add(new Token(TokensId.TITLECLOSE, lexematClose, line));
+							}
+							else {
+								//error
+							}
+							break;
+						case 'l':
+							String lexemalClose = getTextId(String.valueOf(sigClose));
+							if(lexemalClose.equals("<link>")) {
+								tokens.add(new Token(TokensId.LINKCLOSE, lexemalClose, line));
+							}
+							else {
+								//error
+							}
+							break;
+						case 'b':
+							String lexemabClose = getTextId(String.valueOf(sigClose));
+							if(lexemabClose.equals("<body>")) {
+								tokens.add(new Token(TokensId.BODYCLOSE, lexemabClose, line));
+							}
+							else if(lexemabClose.equals("<b>")) {
+								tokens.add(new Token(TokensId.BCLOSE, lexemabClose, line));
+							}
+							else {
+								//error
+							}
+							break;
+						case 'p':
+							String lexemapClose = getTextId(String.valueOf(sigClose));
+							if(lexemapClose.equals("<p>")) {
+								tokens.add(new Token(TokensId.PCLOSE, lexemapClose, line));
+							}
+							else {
+								//error
+							}
+							break;
+						case 'i':
+							String lexemaiClose = getTextId(String.valueOf(sigClose));
+							if(lexemaiClose.equals("<i>")) {
+								tokens.add(new Token(TokensId.ICLOSE, lexemaiClose, line));
+							}
+							else {
+								//error
+							}
+							break;
+						case 'u':
+							String lexemauClose = getTextId(String.valueOf(sigClose));
+							if(lexemauClose.equals("<u>")) {
+								tokens.add(new Token(TokensId.UCLOSE, lexemauClose, line));
+							}
+							else {
+								//error
+							}
+							break;
+						default:
+							//error
+							break;
+						}
+						break;
+					default:
+						//error
+						break;
+
+					}
 					break;
 				case '\n':
 					line++;
@@ -47,137 +210,73 @@ public class Lexicon {
 				case (char) -1:
 					break;
 				default:
-					if(Character.isAlphabetic(valor)) {
-						lex = getText(String.valueOf(valor));
-							switch(lex) {
-							case "black":
-								tokens.add(new Token(TokensId.black, lex, line));
-								break;
-							case "blue":
-								tokens.add(new Token(TokensId.blue, lex, line));
-								break;
-							case "green":
-								tokens.add(new Token(TokensId.green, lex, line));
-								break;
-							case "red":
-								tokens.add(new Token(TokensId.red, lex, line));
-								break;
-							case "center":
-								tokens.add(new Token(TokensId.center, lex, line));
-								break;
-							case "rigth":
-								tokens.add(new Token(TokensId.rigth, lex, line));
-								break;
-							case "left":
-								tokens.add(new Token(TokensId.left, lex, line));
-								break;
-							case "normal":
-								tokens.add(new Token(TokensId.normal, lex, line));
-								break;
-							case "italic":
-								tokens.add(new Token(TokensId.italic, lex, line));
-								break;
-							case "bold":
-								tokens.add(new Token(TokensId.bold, lex, line));
-								break;
-							case "text-align":
-								tokens.add(new Token(TokensId.textAlign, lex, line));
-								break;
-							case "color":
-								tokens.add(new Token(TokensId.color, lex, line));
-								break;
-							case "font-style":
-								tokens.add(new Token(TokensId.fontStyle, lex, line));
-								break;
-							case "font-size":
-								tokens.add(new Token(TokensId.fontSize, lex, line));
-								break;
-							default:
-								tokens.add(new Token(TokensId.id, lex, line));
-								break;
-							}
-						
-					}
-					else if(Character.isDigit(valor)) {
-						lex = getSize(String.valueOf(valor));
-						tokens.add(new Token(TokensId.numero, lex, line));
-					}
+					String texto = getTextComplete(getTextId(String.valueOf(valor)));
 					break;
+
 				}}
-				filereader.close();
-			}catch(IOException e){
-				System.out.println("Error E/S: "+e);
-			}
-
+			filereader.close();
+		}catch(IOException e){
+			System.out.println("Error E/S: "+e);
 		}
 
-		// ++
-		// ++ Operaciones para el Sintactico
-		// ++
-		// Devolver el último token
-		public void returnLastToken () {
-			i--;
+	}
+
+	// ++
+	// ++ Operaciones para el Sintactico
+	// ++
+	// Devolver el último token
+	public void returnLastToken () {
+		i--;
+	}
+
+	// Get Token
+	public Token getToken () {
+		if (i < tokens.size()) {
+			return tokens.get(i++);
 		}
+		return new Token (TokensId.EOF,"EOF", line);
+	}	
+	// ++
+	// ++ Operaciones para el Sintactico
+	// ++
 
-		// Get Token
-		public Token getToken () {
-			if (i < tokens.size()) {
-				return tokens.get(i++);
-			}
-			return new Token (TokensId.EOF,"EOF", line);
-		}	
-		// ++
-		// ++ Operaciones para el Sintactico
-		// ++
-
-		//Privadas
-		String getSize (String lexStart) throws IOException {
-			String lexReturned = lexStart;
-			char valor;
-			do {
-				valor=nextChar();
-				lexReturned = lexReturned+(valor);
-			} while ((valor != 'p') && (valor != -1));
-			//returnChar(valor);
-			if (valor == 'p') {
-				valor=nextChar();
-				if (valor == 'x') {
-					lexReturned = lexReturned+(valor);
-				} else {
-					errorLexico ("Encontrado "+lexReturned+". Se esperada un token SIZE.");
-					return null;
-				}
-			}
-			return lexReturned;
+	String getTextId (String lexStart) throws IOException {
+		String lexReturned = "<" + lexStart;
+		char valor = nextChar();
+		while (valor != '>') {
+			lexReturned = lexReturned+(valor);
+			valor=nextChar();
 		}
-
-		String getText (String lexStart) throws IOException {
-			String lexReturned = lexStart;
-			char valor = nextChar();
-			while (Character.isDigit(valor) || Character.isAlphabetic(valor) || (valor == '-')) {
-				lexReturned = lexReturned+(valor);
-				valor=nextChar();
-			}
-			returnChar(valor);
-			return lexReturned;
+		lexReturned = lexReturned+(valor);
+		return lexReturned;
+	}
+	
+	String getTextComplete (String lexStart) throws IOException {
+		String lexReturned = lexStart;
+		char valor = nextChar();
+		while (valor != '<') {
+			lexReturned = lexReturned+(valor);
+			valor=nextChar();
 		}
+		return lexReturned;
+	}
 
-		char nextChar() throws IOException{
-			if (charBuffUsed) {
-				charBuffUsed = false;
-				return charBuff;
-			} else {
-				int valor=filereader.read();
-				return ((char) valor);
-			}
-		}
-
-		void returnChar (char r) {
-			charBuffUsed = true;
-			charBuff = r;
-		}
-
-		void errorLexico (String e) {
-			System.out.println("Error léxico en : "+e);
+	char nextChar() throws IOException{
+		if (charBuffUsed) {
+			charBuffUsed = false;
+			return charBuff;
+		} else {
+			int valor=filereader.read();
+			return ((char) valor);
 		}
 	}
+
+	void returnChar (char r) {
+		charBuffUsed = true;
+		charBuff = r;
+	}
+
+	void errorLexico (String e) {
+		System.out.println("Error léxico en : "+e);
+	}
+}
