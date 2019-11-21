@@ -1,0 +1,25 @@
+programa: HTML head body HTMLC
+
+head: HEAD title link HEADC
+
+title: TITLE TEXT TITLEC
+
+link: LINK HREF EQ STRING REL EQ STRING TYPE EQ STRING CLOSE
+
+body: BODY parrafo* BODYC
+
+parrafo: h1 | h2 | p
+
+h1: H1 TEXT H1C
+
+h2: H2 TEXT H2C
+
+p: P bloque* PC
+
+bloque: boldText | italic | underlText | TEXT
+
+boldText: B TEXT BC
+
+italic: I TEXT IC 
+
+underlText: U TEXT UC 

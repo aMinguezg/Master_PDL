@@ -23,7 +23,6 @@ public class Lexicon {
 
 	public Lexicon (FileReader f) {
 		filereader = f;
-		String lex;
 		try{
 			char valor=(char) 0;
 			while(valor!=(char) -1){
@@ -48,7 +47,7 @@ public class Lexicon {
 							tokens.add(new Token(TokensId.H2OPEN, lexemah, line));
 							break;
 						default:
-							//error
+							errorLexico ("Encontrado "+lexemah+". Se esperada un token SIZE.");
 							break;
 						}
 						break;
@@ -58,17 +57,123 @@ public class Lexicon {
 							tokens.add(new Token(TokensId.TITLEOPEN, lexemat, line));
 						}
 						else {
-							//error
+							errorLexico ("Encontrado "+lexemat+". Se esperada un token SIZE.");
 						}
 						break;
 					case 'l':
-						String lexemal = getTextId(String.valueOf(sig));
-						if(lexemal.equals("<link>")) {
+						String lexemal = getTextIdLink(String.valueOf(sig));
+						if(lexemal.equals("<link")) {
 							tokens.add(new Token(TokensId.LINKOPEN, lexemal, line));
+							char sigLink = nextChar();
+							if(sigLink == 'h'){
+								String result = String.valueOf(sigLink);
+								sigLink=nextChar();
+								while (sigLink != '=') {
+									result = result+(sigLink);
+									sigLink=nextChar();
+								}
+								if(result.equals("href")){
+									tokens.add(new Token(TokensId.HREF, result, line));
+									tokens.add(new Token(TokensId.EQUAL, "=", line));
+									sigLink=nextChar();
+									if(sigLink == '"'){
+										String result2 = String.valueOf(sigLink);
+										sigLink=nextChar();
+										while (sigLink != ' ') {
+											result2 = result2+(sigLink);
+											sigLink=nextChar();
+										}
+										tokens.add(new Token(TokensId.STRING, result2, line));
+										sigLink=nextChar(); //tiene que leer rel
+										if(sigLink == 'r'){
+											String result3 = String.valueOf(sigLink);
+											sigLink=nextChar();
+											while (sigLink != '=') {
+												result3 = result3+(sigLink);
+												sigLink=nextChar();
+											}
+											if(result3.equals("rel")){
+												tokens.add(new Token(TokensId.REL, result3, line));
+												tokens.add(new Token(TokensId.EQUAL, "=", line));
+												sigLink=nextChar();
+												if(sigLink == '"'){
+													String result4 = String.valueOf(sigLink);
+													sigLink=nextChar();
+													while (sigLink != ' ') {
+														result4 = result4+(sigLink);
+														sigLink=nextChar();
+													}
+													tokens.add(new Token(TokensId.STRING, result4, line));
+													sigLink=nextChar(); //tiene que leer rel
+													if(sigLink == 't'){
+														String result5 = String.valueOf(sigLink);
+														sigLink=nextChar();
+														while (sigLink != '=') {
+															result5 = result5+(sigLink);
+															sigLink=nextChar();
+														}
+														if(result5.equals("type")){
+															tokens.add(new Token(TokensId.TYPE, result5, line));
+															tokens.add(new Token(TokensId.EQUAL, "=", line));
+															sigLink=nextChar();
+															if(sigLink == '"'){
+																String result6 = String.valueOf(sigLink);
+																sigLink=nextChar();
+																while (sigLink != '"') {
+																	result6 = result6+(sigLink);
+																	sigLink=nextChar();
+																}
+																result6 = result6+(sigLink);
+																tokens.add(new Token(TokensId.STRING, result6, line));
+
+															}
+															else{
+																errorLexico ("Encontrado "+sigLink+". Se esperada un token SIZE.");
+																break;
+															}
+														}
+														else{
+															errorLexico ("Encontrado "+sigLink+". Se esperada un token SIZE.");
+															break;
+														}
+													}
+													else{
+														errorLexico ("Encontrado "+sigLink+". Se esperada un token SIZE.");
+														break;
+													}
+												}
+												else{
+													errorLexico ("Encontrado "+sigLink+". Se esperada un token SIZE.");
+													break;
+												}
+											}
+											else{
+												errorLexico ("Encontrado "+sigLink+". Se esperada un token SIZE.");
+												break;
+											}
+										}
+										else{
+											errorLexico ("Encontrado "+sigLink+". Se esperada un token SIZE.");
+											break;
+										}
+
+									}
+									else{
+										errorLexico ("Encontrado "+sigLink+". Se esperada un token SIZE.");
+										break;
+									}
+								}
+								else{
+									errorLexico ("Encontrado "+sigLink+". Se esperada un token SIZE.");
+									break;
+								}
+							}
+							else{
+								errorLexico ("Encontrado "+sigLink+". Se esperada un token SIZE.");
+								break;
+							}
 						}
-						else {
-							//error
-						}
+						
 						break;
 					case 'b':
 						String lexemab = getTextId(String.valueOf(sig));
@@ -79,7 +184,8 @@ public class Lexicon {
 							tokens.add(new Token(TokensId.BOPEN, lexemab, line));
 						}
 						else {
-							//error
+							errorLexico ("Encontrado "+lexemab+". Se esperada un token SIZE.");
+							break;
 						}
 						break;
 					case 'p':
@@ -88,7 +194,8 @@ public class Lexicon {
 							tokens.add(new Token(TokensId.POPEN, lexemap, line));
 						}
 						else {
-							//error
+							errorLexico ("Encontrado "+lexemap+". Se esperada un token SIZE.");
+							break;
 						}
 						break;
 					case 'i':
@@ -97,7 +204,8 @@ public class Lexicon {
 							tokens.add(new Token(TokensId.IOPEN, lexemai, line));
 						}
 						else {
-							//error
+							errorLexico ("Encontrado "+lexemai+". Se esperada un token SIZE.");
+							break;
 						}
 						break;
 					case 'u':
@@ -106,96 +214,93 @@ public class Lexicon {
 							tokens.add(new Token(TokensId.UOPEN, lexemau, line));
 						}
 						else {
-							//error
+							errorLexico ("Encontrado "+lexemau+". Se esperada un token SIZE.");
+							break;
 						}
 						break;
 					case '/':
 						char sigClose = nextChar();
-						switch(sig) {
+						switch(sigClose) {
 						case 'h':
-							String lexemahClose = getTextId(String.valueOf(sigClose));
+							String lexemahClose = getTextIdClose(String.valueOf(sigClose));
 							switch(lexemahClose) {
-							case "<html>": 
+							case "</html>": 
 								tokens.add(new Token(TokensId.HTMLCLOSE, lexemahClose, line));
 								break;
-							case "<head>":
+							case "</head>":
 								tokens.add(new Token(TokensId.HEADCLOSE, lexemahClose, line));
 								break;
-							case "<h1>":
+							case "</h1>":
 								tokens.add(new Token(TokensId.H1CLOSE, lexemahClose, line));
 								break;
-							case "<h2>":
+							case "</h2>":
 								tokens.add(new Token(TokensId.H2CLOSE, lexemahClose, line));
 								break;
 							default:
-								//error
+								errorLexico ("Encontrado "+lexemahClose+". Se esperada un token SIZE.");
 								break;
 							}
 							break;
 						case 't':
-							String lexematClose = getTextId(String.valueOf(sigClose));
-							if(lexematClose.equals("<title>")) {
+							String lexematClose = getTextIdClose(String.valueOf(sigClose));
+							if(lexematClose.equals("</title>")) {
 								tokens.add(new Token(TokensId.TITLECLOSE, lexematClose, line));
 							}
 							else {
-								//error
-							}
-							break;
-						case 'l':
-							String lexemalClose = getTextId(String.valueOf(sigClose));
-							if(lexemalClose.equals("<link>")) {
-								tokens.add(new Token(TokensId.LINKCLOSE, lexemalClose, line));
-							}
-							else {
-								//error
+								errorLexico ("Encontrado "+lexematClose+". Se esperada un token SIZE.");
+								break;
 							}
 							break;
 						case 'b':
-							String lexemabClose = getTextId(String.valueOf(sigClose));
-							if(lexemabClose.equals("<body>")) {
+							String lexemabClose = getTextIdClose(String.valueOf(sigClose));
+							if(lexemabClose.equals("</body>")) {
 								tokens.add(new Token(TokensId.BODYCLOSE, lexemabClose, line));
 							}
-							else if(lexemabClose.equals("<b>")) {
+							else if(lexemabClose.equals("</b>")) {
 								tokens.add(new Token(TokensId.BCLOSE, lexemabClose, line));
 							}
 							else {
-								//error
+								errorLexico ("Encontrado "+lexemabClose+". Se esperada un token SIZE.");
+								break;
 							}
 							break;
 						case 'p':
-							String lexemapClose = getTextId(String.valueOf(sigClose));
-							if(lexemapClose.equals("<p>")) {
+							String lexemapClose = getTextIdClose(String.valueOf(sigClose));
+							if(lexemapClose.equals("</p>")) {
 								tokens.add(new Token(TokensId.PCLOSE, lexemapClose, line));
 							}
 							else {
-								//error
+								errorLexico ("Encontrado "+lexemapClose+". Se esperada un token SIZE.");
+								break;
 							}
 							break;
 						case 'i':
-							String lexemaiClose = getTextId(String.valueOf(sigClose));
-							if(lexemaiClose.equals("<i>")) {
+							String lexemaiClose = getTextIdClose(String.valueOf(sigClose));
+							if(lexemaiClose.equals("</i>")) {
 								tokens.add(new Token(TokensId.ICLOSE, lexemaiClose, line));
 							}
 							else {
-								//error
+								errorLexico ("Encontrado "+lexemaiClose+". Se esperada un token SIZE.");
+								break;
 							}
 							break;
 						case 'u':
-							String lexemauClose = getTextId(String.valueOf(sigClose));
-							if(lexemauClose.equals("<u>")) {
+							String lexemauClose = getTextIdClose(String.valueOf(sigClose));
+							if(lexemauClose.equals("</u>")) {
 								tokens.add(new Token(TokensId.UCLOSE, lexemauClose, line));
 							}
 							else {
-								//error
+								errorLexico ("Encontrado "+lexemauClose+". Se esperada un token SIZE.");
+								break;
 							}
 							break;
 						default:
-							//error
+							errorLexico ("Encontrado "+sigClose+". Se esperada un token SIZE.");
 							break;
 						}
 						break;
 					default:
-						//error
+						errorLexico ("Encontrado "+sig+". Se esperada un token SIZE.");
 						break;
 
 					}
@@ -205,12 +310,18 @@ public class Lexicon {
 					break;
 				case '\r':
 					break;
+				case '\t':
+					break;
+				case '>':
+					tokens.add(new Token(TokensId.LINKCLOSE, String.valueOf(valor), line));
+					break;
 				case ' ':
 					break;
 				case (char) -1:
 					break;
 				default:
-					String texto = getTextComplete(getTextId(String.valueOf(valor)));
+					String texto = getTextComplete((String.valueOf(valor)));
+					tokens.add(new Token(TokensId.TEXTO, texto, line));
 					break;
 
 				}}
@@ -240,6 +351,16 @@ public class Lexicon {
 	// ++ Operaciones para el Sintactico
 	// ++
 
+	String getTextIdLink (String lexStart) throws IOException {
+		String lexReturned = "<" + lexStart;
+		char valor = nextChar();
+		while (valor != ' ') {
+			lexReturned = lexReturned+(valor);
+			valor=nextChar();
+		}
+		return lexReturned;
+	}
+
 	String getTextId (String lexStart) throws IOException {
 		String lexReturned = "<" + lexStart;
 		char valor = nextChar();
@@ -251,6 +372,17 @@ public class Lexicon {
 		return lexReturned;
 	}
 	
+	String getTextIdClose (String lexStart) throws IOException {
+		String lexReturned = "</" + lexStart;
+		char valor = nextChar();
+		while (valor != '>') {
+			lexReturned = lexReturned+(valor);
+			valor=nextChar();
+		}
+		lexReturned = lexReturned+(valor);
+		return lexReturned;
+	}
+
 	String getTextComplete (String lexStart) throws IOException {
 		String lexReturned = lexStart;
 		char valor = nextChar();
@@ -258,6 +390,7 @@ public class Lexicon {
 			lexReturned = lexReturned+(valor);
 			valor=nextChar();
 		}
+		returnChar(valor);
 		return lexReturned;
 	}
 
