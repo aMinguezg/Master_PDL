@@ -4,10 +4,14 @@ import com.compiladores.web.html.visitor.Visitor;
 
 public class Link implements AstHtml{
 
-	public String link;
+	public String href;
+	public String rel;
+	public String type;
 	
-	public Link(String link) {
-		this.link = link;
+	public Link(String href,String rel, String type) {
+		this.href = href;
+		this.rel = rel;
+		this.type = type;
 	}
 	
 	@Override

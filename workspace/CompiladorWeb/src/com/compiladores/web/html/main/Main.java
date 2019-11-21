@@ -3,7 +3,9 @@ package com.compiladores.web.html.main;
 import java.io.FileReader;
 import java.io.IOException;
 
+import com.compiladores.web.html.ast.AstHtml;
 import com.compiladores.web.html.parser.Lexicon;
+import com.compiladores.web.html.parser.Parser;
 import com.compiladores.web.html.parser.Token;
 import com.compiladores.web.html.parser.TokensId;
 
@@ -15,10 +17,10 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		FileReader filereader = new FileReader ("resources/EX4.html");
 		Lexicon lex = new Lexicon(filereader);
-		listaTokens(lex);
-		/*Parser parser = new Parser (lex);
-		AstCss ast = parser.parse();
-		PrintCssAstVisitor visitor = new PrintCssAstVisitor();
+		//listaTokens(lex);
+		Parser parser = new Parser (lex);
+		AstHtml ast = parser.parse();
+		/*PrintCssAstVisitor visitor = new PrintCssAstVisitor();
 		String s = (String) ast.accept(visitor, null);
 		System.out.println(s);*/
 	}
