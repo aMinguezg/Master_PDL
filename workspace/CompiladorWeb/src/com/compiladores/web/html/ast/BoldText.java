@@ -2,7 +2,13 @@ package com.compiladores.web.html.ast;
 
 import com.compiladores.web.html.visitor.Visitor;
 
-public class BoldText implements AstHtml{
+public class BoldText implements Bloque{
+	
+	public String boldText;
+
+	public BoldText(String boldText) {
+		this.boldText = boldText;
+	}
 
 	@Override
 	public Object accept(Visitor v, Object param) {

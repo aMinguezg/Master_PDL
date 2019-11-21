@@ -3,6 +3,12 @@ package com.compiladores.web.html.ast;
 import com.compiladores.web.html.visitor.Visitor;
 
 public class Title implements AstHtml{
+	
+	public String titulo;
+	
+	public Title(String titulo) {
+		this.titulo = titulo;
+	}
 
 	@Override
 	public Object accept(Visitor v, Object param) {

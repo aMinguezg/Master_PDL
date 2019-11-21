@@ -4,6 +4,12 @@ import com.compiladores.web.html.visitor.Visitor;
 
 public class Link implements AstHtml{
 
+	public String link;
+	
+	public Link(String link) {
+		this.link = link;
+	}
+	
 	@Override
 	public Object accept(Visitor v, Object param) {
 		// TODO Auto-generated method stub
