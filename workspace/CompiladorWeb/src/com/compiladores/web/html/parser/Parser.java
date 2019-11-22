@@ -17,6 +17,7 @@ import com.compiladores.web.html.ast.Link;
 import com.compiladores.web.html.ast.P;
 import com.compiladores.web.html.ast.Parrafo;
 import com.compiladores.web.html.ast.Programa;
+import com.compiladores.web.html.ast.Text;
 import com.compiladores.web.html.ast.Title;
 import com.compiladores.web.html.ast.UnderlText;
 
@@ -187,6 +188,7 @@ public class Parser {
 			token = lex.getToken();
 			while(token.getToken() == TokensId.H1OPEN || token.getToken() == TokensId.H2OPEN 
 					|| token.getToken() == TokensId.POPEN){
+				lex.returnLastToken();
 				Parrafo p = parseParrafo();
 				if((p != null) && (!errorSint)) {
 					parrafos.add(p);
@@ -197,7 +199,6 @@ public class Parser {
 		else {
 			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba el final del fichero", token.getLine());
 		}
-
 
 		if (token.getToken().equals(TokensId.BODYCLOSE) && !errorSint) {
 			body = new Body(parrafos);
@@ -287,7 +288,8 @@ public class Parser {
 		Token token = lex.getToken();
 
 		while(token.getToken() == TokensId.BOPEN || token.getToken() == TokensId.UOPEN 
-				|| token.getToken() == TokensId.IOPEN){
+				|| token.getToken() == TokensId.IOPEN || token.getToken() == TokensId.TEXTO){
+			lex.returnLastToken();
 			Bloque b = parseBloque();
 			if((b != null) && (!errorSint)) {
 				bloques.add(b);
@@ -305,6 +307,7 @@ public class Parser {
 	Bloque parseBloque(){
 		Bloque bloque = null;
 		Token token = lex.getToken();
+		Text text = null;
 		BoldText boldText = null;
 		ItalicText italicText = null;
 		UnderlText underlText = null;
@@ -324,6 +327,10 @@ public class Parser {
 			}else {
 				return null;
 			}
+		}
+		else if(token.getToken().equals(TokensId.TEXTO)) {
+			 text = new Text(token.getLexeme());
+			 return text;	
 		}
 		else if(token.getToken().equals(TokensId.UOPEN)) {
 			underlText = parseUnderlText();
