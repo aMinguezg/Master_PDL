@@ -11,6 +11,7 @@ import com.compiladores.web.html.ast.Link;
 import com.compiladores.web.html.ast.P;
 import com.compiladores.web.html.ast.Parrafo;
 import com.compiladores.web.html.ast.Programa;
+import com.compiladores.web.html.ast.Text;
 import com.compiladores.web.html.ast.Title;
 import com.compiladores.web.html.ast.UnderlText;
 
@@ -42,4 +43,5 @@ public interface Visitor {
 	
 	Object visit(UnderlText u,  Object param);
 	
+	Object visit(Text t,  Object param);
 }
