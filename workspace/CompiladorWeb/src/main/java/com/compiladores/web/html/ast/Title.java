@@ -13,7 +13,7 @@ public class Title implements AstHtml{
 	@Override
 	public Object accept(Visitor v, Object param) {
 		// TODO Auto-generated method stub
-		return null;
+		return v.visit(this, param);
 	}
 
 }

@@ -15,7 +15,7 @@ public class P implements Parrafo{
 	@Override
 	public Object accept(Visitor v, Object param) {
 		// TODO Auto-generated method stub
-		return null;
+		return v.visit(this, param);
 	}
 
 }

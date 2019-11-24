@@ -142,8 +142,9 @@ public class RenderVisitor implements Visitor {
     @Override
     public Object visit(P p, Object param) {
 
-        String texto = "Hola";
+        List<Bloque> bloques = p.bloque;
         Map<String, String> atributos = new HashMap<>();
+        Linea linea = null;
 
         for (String a: this.atributos) {
             String v = buscaParam.search("p", a, userCssAst);
@@ -155,8 +156,10 @@ public class RenderVisitor implements Visitor {
             atributos.put(a ,v);
         }
 
-        Linea linea = new Linea("p", texto, atributos);
-        pagina.lineas.add(linea);
+        for (Bloque b: bloques) {
+            linea = new Linea("Tipo", "Texto", atributos);
+            pagina.lineas.add(linea);
+        }
 
         return null;
     }
