@@ -1,0 +1,33 @@
+package main.java.com.compiladores.web.html.parser;
+
+public enum TokensId {
+	EOF, 
+	HTMLOPEN,
+	HTMLCLOSE,
+	HEADOPEN,
+	HEADCLOSE,
+	BODYOPEN,
+	BODYCLOSE,
+	TITLEOPEN,
+	TITLECLOSE,
+	LINKOPEN,
+	LINKCLOSE,
+	H1OPEN,
+	H1CLOSE,
+	H2OPEN,
+	H2CLOSE,
+	POPEN,
+	PCLOSE,
+	BOPEN,
+	BCLOSE,
+	IOPEN,
+	ICLOSE,
+	UOPEN,
+	UCLOSE,
+	TEXTO,
+	STRING,
+	HREF,
+	EQUAL,
+	REL,
+	TYPE
+}
