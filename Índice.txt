@@ -1,0 +1,5 @@
+Se entrega:
+
+	- Arquitectura del navegador: Documento 1 con el diagrama de componentes y la descripción de la arquitectura.
+	- Gramáticas: Documento 2 con las gramáticas y tokens de HTML y CSS.
+	- CompiladorWeb: Código desarrollado.
