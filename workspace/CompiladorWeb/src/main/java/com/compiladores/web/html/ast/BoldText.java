@@ -25,7 +25,7 @@ public class BoldText implements Bloque{
 	@Override
 	public String getTipoText() {
 		// TODO Auto-generated method stub
-		return "negrita";
+		return "texto negrita";
 	}
 
 }

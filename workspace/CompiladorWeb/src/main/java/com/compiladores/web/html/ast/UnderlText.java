@@ -28,6 +28,6 @@ public class UnderlText implements Bloque{
 	@Override
 	public String getTipoText() {
 		// TODO Auto-generated method stub
-		return "subrayado";
+		return "texto subrayado";
 	}
 }

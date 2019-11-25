@@ -25,7 +25,7 @@ public class Text implements Bloque{
 	@Override
 	public String getTipoText() {
 		// TODO Auto-generated method stub
-		return "normal";
+		return "texto plano";
 	}
 
 }

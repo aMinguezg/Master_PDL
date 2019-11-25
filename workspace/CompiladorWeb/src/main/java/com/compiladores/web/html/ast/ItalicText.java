@@ -25,7 +25,7 @@ public class ItalicText implements Bloque{
 	@Override
 	public String getTipoText() {
 		// TODO Auto-generated method stub
-		return "italica";
+		return "texto italica";
 	}
 
 }
