@@ -17,7 +17,7 @@ public class Linea {
         }
 
         public String toString() {
-            return "tipo: " + tipo + " texto: " + texto +
-            " atributos: " + atributos.toString();
+            return "TIPO: " + tipo + " TEXTO: " + texto +
+            " ATRIBUTOS: " + atributos.toString();
         }
 }

@@ -16,4 +16,18 @@ public class UnderlText implements Bloque{
 		// TODO Auto-generated method stub
 		return v.visit(this, param);
 	}
+
+
+	@Override
+	public String getText() {
+		// TODO Auto-generated method stub
+		return this.underlText;
+	}
+
+
+	@Override
+	public String getTipoText() {
+		// TODO Auto-generated method stub
+		return "subrayado";
+	}
 }

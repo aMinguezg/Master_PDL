@@ -16,4 +16,16 @@ public class BoldText implements Bloque{
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String getText() {
+		
+		return this.boldText;
+	}
+
+	@Override
+	public String getTipoText() {
+		// TODO Auto-generated method stub
+		return "negrita";
+	}
+
 }

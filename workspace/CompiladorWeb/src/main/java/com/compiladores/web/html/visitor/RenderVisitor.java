@@ -46,7 +46,6 @@ public class RenderVisitor implements Visitor {
 
     public RenderVisitor(AstHtml astHtml) throws FileNotFoundException {
 
-
     	File cssDefault = utils.getFileFromResources("Default.css");
         FileReader fileReader = null;
 
@@ -64,7 +63,8 @@ public class RenderVisitor implements Visitor {
         Lexicon lex = new Lexicon(fileReader);
         Parser parser = new Parser(lex);
         String cssUserPath = (String) astHtml.accept(buscaCss, null);
-        File cssUser = utils.getFileFromResources("EX1.css");
+        cssUserPath = cssUserPath.substring(1, cssUserPath.length()-1);
+        File cssUser = utils.getFileFromResources(cssUserPath);
 
         defaultCssAst = parser.parse();
 
@@ -73,7 +73,7 @@ public class RenderVisitor implements Visitor {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+        
         lex = new Lexicon(fileReader);
         parser = new Parser(lex);
         userCssAst = parser.parse();
@@ -157,7 +157,7 @@ public class RenderVisitor implements Visitor {
         }
 
         for (Bloque b: bloques) {
-            linea = new Linea("Tipo", "Texto", atributos);
+            linea = new Linea(b.getTipoText(), b.getText(), atributos);
             pagina.lineas.add(linea);
         }
 

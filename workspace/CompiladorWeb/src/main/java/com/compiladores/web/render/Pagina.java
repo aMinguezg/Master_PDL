@@ -13,7 +13,7 @@ public class Pagina {
         int i = 0;
 
         for (Linea l: lineas) {
-            s = s.concat("Linea " + i + ": " + l.toString() + "\n");
+            s = s.concat("LINEA " + i + ": " + l.toString() + "\n");
             i++;
         }
 

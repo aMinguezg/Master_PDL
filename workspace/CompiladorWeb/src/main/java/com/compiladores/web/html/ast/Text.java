@@ -16,4 +16,16 @@ public class Text implements Bloque{
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String getText() {
+		// TODO Auto-generated method stub
+		return this.text;
+	}
+
+	@Override
+	public String getTipoText() {
+		// TODO Auto-generated method stub
+		return "normal";
+	}
+
 }
