@@ -1,10 +1,8 @@
 package main.java.com.compiladores.web.html.visitor;
 
-import main.java.com.compiladores.web.css.ast.Regla;
 import main.java.com.compiladores.web.html.ast.*;
 
 public class PrintHtmlAstVisitor implements Visitor {
-	String sp = "   ";
 
 	@Override
 	public Object visit(Bloque b, Object param) {
@@ -20,17 +18,20 @@ public class PrintHtmlAstVisitor implements Visitor {
 
 	@Override
 	public Object visit(BoldText b, Object param) {
-		return (String) param + b.boldText + "\n";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Object visit(H1 h, Object param) {
-		return (String) param + h.h1 + "\n";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Object visit(H2 h, Object param) {
-		return (String) param + h.h2 + "\n";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -41,7 +42,8 @@ public class PrintHtmlAstVisitor implements Visitor {
 
 	@Override
 	public Object visit(ItalicText i, Object param) {
-		return (String) param + i.italicText + "\n";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -64,26 +66,26 @@ public class PrintHtmlAstVisitor implements Visitor {
 
 	@Override
 	public Object visit(Programa p, Object param) {
-		String sd = "", sr;
-		
-		sr = "(HTML declarations\n"+ p.head.toString() + p.body.toString() + ")";
-		return sr;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Object visit(Title t, Object param) {
-		return (String) param + t.titulo + "\n";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Object visit(UnderlText u, Object param) {
-		return (String) param + u.underlText + "\n";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Object visit(Text t, Object param) {
-		return (String) param + t.text + "\n";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	
 }

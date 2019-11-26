@@ -28,10 +28,10 @@ public class Lexicon {
 			while(valor!=(char) -1){
 				valor=nextChar();
 				switch(valor) {
-				case '<':
+				case '<': // Etiquetas de apertura
 					char sig = nextChar();
 					switch(sig) {
-					case 'h':
+					case 'h': // Etiquetas que empiezan por h
 						String lexemah = getTextId(String.valueOf(sig));
 						switch(lexemah) {
 						case "<html>": 
@@ -51,7 +51,7 @@ public class Lexicon {
 							break;
 						}
 						break;
-					case 't':
+					case 't': // Etiquetas que empiezan por t
 						String lexemat = getTextId(String.valueOf(sig));
 						if(lexemat.equals("<title>")) {
 							tokens.add(new Token(TokensId.TITLEOPEN, lexemat, line));
@@ -60,7 +60,7 @@ public class Lexicon {
 							errorLexico ("Encontrado "+lexemat+". Se esperada un token SIZE.");
 						}
 						break;
-					case 'l':
+					case 'l': // Etiquetas que empiezan por l
 						String lexemal = getTextIdLink(String.valueOf(sig));
 						if(lexemal.equals("<link")) {
 							tokens.add(new Token(TokensId.LINKOPEN, lexemal, line));
@@ -72,7 +72,7 @@ public class Lexicon {
 									result = result+(sigLink);
 									sigLink=nextChar();
 								}
-								if(result.equals("href")){
+								if(result.equals("href")){ // Se busca href
 									tokens.add(new Token(TokensId.HREF, result, line));
 									tokens.add(new Token(TokensId.EQUAL, "=", line));
 									sigLink=nextChar();
@@ -84,7 +84,7 @@ public class Lexicon {
 											sigLink=nextChar();
 										}
 										tokens.add(new Token(TokensId.STRING, result2, line));
-										sigLink=nextChar(); //tiene que leer rel
+										sigLink=nextChar(); 
 										if(sigLink == 'r'){
 											String result3 = String.valueOf(sigLink);
 											sigLink=nextChar();
@@ -92,7 +92,7 @@ public class Lexicon {
 												result3 = result3+(sigLink);
 												sigLink=nextChar();
 											}
-											if(result3.equals("rel")){
+											if(result3.equals("rel")){ // Se busca rel
 												tokens.add(new Token(TokensId.REL, result3, line));
 												tokens.add(new Token(TokensId.EQUAL, "=", line));
 												sigLink=nextChar();
@@ -112,7 +112,7 @@ public class Lexicon {
 															result5 = result5+(sigLink);
 															sigLink=nextChar();
 														}
-														if(result5.equals("type")){
+														if(result5.equals("type")){ // Se busca type
 															tokens.add(new Token(TokensId.TYPE, result5, line));
 															tokens.add(new Token(TokensId.EQUAL, "=", line));
 															sigLink=nextChar();
@@ -175,7 +175,7 @@ public class Lexicon {
 						}
 						
 						break;
-					case 'b':
+					case 'b': // Etiquetas que empiezan por b
 						String lexemab = getTextId(String.valueOf(sig));
 						if(lexemab.equals("<body>")) {
 							tokens.add(new Token(TokensId.BODYOPEN, lexemab, line));
@@ -188,7 +188,7 @@ public class Lexicon {
 							break;
 						}
 						break;
-					case 'p':
+					case 'p': // Etiquetas que empiezan por p
 						String lexemap = getTextId(String.valueOf(sig));
 						if(lexemap.equals("<p>")) {
 							tokens.add(new Token(TokensId.POPEN, lexemap, line));
@@ -198,7 +198,7 @@ public class Lexicon {
 							break;
 						}
 						break;
-					case 'i':
+					case 'i': // Etiquetas que empiezan por i
 						String lexemai = getTextId(String.valueOf(sig));
 						if(lexemai.equals("<i>")) {
 							tokens.add(new Token(TokensId.IOPEN, lexemai, line));
@@ -208,7 +208,7 @@ public class Lexicon {
 							break;
 						}
 						break;
-					case 'u':
+					case 'u': // Etiquetas que empiezan por u
 						String lexemau = getTextId(String.valueOf(sig));
 						if(lexemau.equals("<u>")) {
 							tokens.add(new Token(TokensId.UOPEN, lexemau, line));
@@ -218,10 +218,10 @@ public class Lexicon {
 							break;
 						}
 						break;
-					case '/':
+					case '/': // Etiquetas de cierre
 						char sigClose = nextChar();
 						switch(sigClose) {
-						case 'h':
+						case 'h': // Ciere de etiquetas que empiezan con h
 							String lexemahClose = getTextIdClose(String.valueOf(sigClose));
 							switch(lexemahClose) {
 							case "</html>": 
@@ -241,7 +241,7 @@ public class Lexicon {
 								break;
 							}
 							break;
-						case 't':
+						case 't': // Ciere de etiquetas que empiezan con t
 							String lexematClose = getTextIdClose(String.valueOf(sigClose));
 							if(lexematClose.equals("</title>")) {
 								tokens.add(new Token(TokensId.TITLECLOSE, lexematClose, line));
@@ -251,7 +251,7 @@ public class Lexicon {
 								break;
 							}
 							break;
-						case 'b':
+						case 'b': // Ciere de etiquetas que empiezan con b
 							String lexemabClose = getTextIdClose(String.valueOf(sigClose));
 							if(lexemabClose.equals("</body>")) {
 								tokens.add(new Token(TokensId.BODYCLOSE, lexemabClose, line));
@@ -264,7 +264,7 @@ public class Lexicon {
 								break;
 							}
 							break;
-						case 'p':
+						case 'p': // Ciere de etiquetas que empiezan con p
 							String lexemapClose = getTextIdClose(String.valueOf(sigClose));
 							if(lexemapClose.equals("</p>")) {
 								tokens.add(new Token(TokensId.PCLOSE, lexemapClose, line));
@@ -274,7 +274,7 @@ public class Lexicon {
 								break;
 							}
 							break;
-						case 'i':
+						case 'i': // Ciere de etiquetas que empiezan con i
 							String lexemaiClose = getTextIdClose(String.valueOf(sigClose));
 							if(lexemaiClose.equals("</i>")) {
 								tokens.add(new Token(TokensId.ICLOSE, lexemaiClose, line));
@@ -284,7 +284,7 @@ public class Lexicon {
 								break;
 							}
 							break;
-						case 'u':
+						case 'u': // Ciere de etiquetas que empiezan con u
 							String lexemauClose = getTextIdClose(String.valueOf(sigClose));
 							if(lexemauClose.equals("</u>")) {
 								tokens.add(new Token(TokensId.UCLOSE, lexemauClose, line));
@@ -312,14 +312,14 @@ public class Lexicon {
 					break;
 				case '\t':
 					break;
-				case '>':
+				case '>': // Etiqueta cierre de link
 					tokens.add(new Token(TokensId.LINKCLOSE, String.valueOf(valor), line));
 					break;
 				case ' ':
 					break;
 				case (char) -1:
 					break;
-				default:
+				default: // Texto entre etiqueas
 					String texto = getTextComplete((String.valueOf(valor)));
 					tokens.add(new Token(TokensId.TEXTO, texto, line));
 					break;
@@ -351,6 +351,9 @@ public class Lexicon {
 	// ++ Operaciones para el Sintactico
 	// ++
 
+	/*
+	 * Devuelve el string para link 
+	 */
 	String getTextIdLink (String lexStart) throws IOException {
 		String lexReturned = "<" + lexStart;
 		char valor = nextChar();
@@ -361,6 +364,9 @@ public class Lexicon {
 		return lexReturned;
 	}
 
+	/*
+	 * Devuelve el string de apertura de las etiquetas
+	 */
 	String getTextId (String lexStart) throws IOException {
 		String lexReturned = "<" + lexStart;
 		char valor = nextChar();
@@ -372,6 +378,9 @@ public class Lexicon {
 		return lexReturned;
 	}
 	
+	/*
+	 * Devuelve el string de cierre de las etiquetas
+	 */
 	String getTextIdClose (String lexStart) throws IOException {
 		String lexReturned = "</" + lexStart;
 		char valor = nextChar();
@@ -383,6 +392,9 @@ public class Lexicon {
 		return lexReturned;
 	}
 
+	/*
+	 * Devuelve el texto entre etiquetas
+	 */
 	String getTextComplete (String lexStart) throws IOException {
 		String lexReturned = lexStart;
 		char valor = nextChar();

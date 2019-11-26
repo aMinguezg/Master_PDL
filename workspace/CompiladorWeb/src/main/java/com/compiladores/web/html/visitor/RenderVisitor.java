@@ -31,173 +31,196 @@ import main.java.com.compiladores.web.render.Linea;
 import main.java.com.compiladores.web.render.Pagina;
 import main.java.com.compiladores.web.main.Utils;
 
-//Visitor para recorrer el arbol
-//Renderiza la pagina
 public class RenderVisitor implements Visitor {
 
 	BuscaCssVisitor buscaCss = new BuscaCssVisitor();
-    BuscarParamEnCssVisitor buscaParam = new BuscarParamEnCssVisitor();
-    AstHtml astHtml;
-    AstCss defaultCssAst;
-    AstCss userCssAst;
-    Utils utils = new Utils();
-    List<String> atributos = new ArrayList<String>();
-    Pagina pagina = new Pagina();
+	BuscarParamEnCssVisitor buscaParam = new BuscarParamEnCssVisitor();
+	AstHtml astHtml;
+	AstCss defaultCssAst;
+	AstCss hrefCssAst;
+	Utils utils = new Utils();
+	List<String> atributos = new ArrayList<String>();
+	FileReader fileReader = null;
 
-    public RenderVisitor(AstHtml astHtml) throws FileNotFoundException {
+	Pagina pagina = new Pagina();
 
-    	File cssDefault = utils.getFileFromResources("Default.css");
-        FileReader fileReader = null;
+	public RenderVisitor(AstHtml astHtml) throws FileNotFoundException {
 
-        atributos.add("color");
-        atributos.add("font-size");
-        atributos.add("text-align");
-        atributos.add("font-style");
+		/*
+		 * Se añaden los atributos del css
+		 */
+		atributos.add("color");
+		atributos.add("font-size");
+		atributos.add("text-align");
+		atributos.add("font-style");
 
-        try {
-            fileReader = new FileReader(cssDefault);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+		
+		/*
+		 * Carga del fichero CSS por defecto
+		 */
+		File cssDefault = utils.getFileFromResources("Default.css");
 
-        Lexicon lex = new Lexicon(fileReader);
-        Parser parser = new Parser(lex);
-        String cssUserPath = (String) astHtml.accept(buscaCss, null);
-        cssUserPath = cssUserPath.substring(1, cssUserPath.length()-1);
-        File cssUser = utils.getFileFromResources(cssUserPath);
+		try {
+			fileReader = new FileReader(cssDefault);
+			Lexicon lex = new Lexicon(fileReader);
+			Parser parser = new Parser(lex);
+			defaultCssAst = parser.parse();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 
-        defaultCssAst = parser.parse();
+		/*
+		 * Carga del fichero CSS que se encuentra en href usando buscaCss
+		 */
+		String cssUserPath = (String) astHtml.accept(buscaCss, null);
+		cssUserPath = cssUserPath.substring(1, cssUserPath.length()-1); //Se eliminan las comillas
+		File cssUser = utils.getFileFromResources(cssUserPath);
 
-        try {
-            fileReader = new FileReader(cssUser);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        
-        lex = new Lexicon(fileReader);
-        parser = new Parser(lex);
-        userCssAst = parser.parse();
+		try {
+			fileReader = new FileReader(cssUser);
+			Lexicon lex = new Lexicon(fileReader);
+			Parser parser = new Parser(lex);
+			hrefCssAst = parser.parse();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 
-    }
+	}
 
-    @Override
-    public Object visit(Parrafo p, Object param) {
-        return null;
-    }
+	@Override
+	public Object visit(Parrafo p, Object param) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    @Override
-    public Object visit(Head h, Object param) {
-        return null;
-    }
+	@Override
+	public Object visit(Head h, Object param) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    @Override
-    public Object visit(H1 h1, Object param) {
+	/*
+	 * Se crea una línea para el h1 
+	 */
+	@Override
+	public Object visit(H1 h1, Object param) {
 
-        String texto = h1.h1;
-        Map<String, String> atributos = new HashMap<>();
+		String texto = h1.h1;
+		Map<String, String> atributos = new HashMap<>();
 
-        for (String a: this.atributos) {
-            String v = buscaParam.search("h1", a, userCssAst);
+		for (String a: this.atributos) {
+			String v = buscaParam.search("h1", a, hrefCssAst);
 
-            if (v == null) {
-                v = buscaParam.search("h1", a, defaultCssAst);
-            }
+			if (v == null) {
+				v = buscaParam.search("h1", a, defaultCssAst);
+			}
 
-            atributos.put(a, v);
-        }
+			atributos.put(a, v);
+		}
 
-        Linea linea = new Linea("h1", texto, atributos);
-        pagina.lineas.add(linea);
+		Linea linea = new Linea("h1", texto, atributos);
+		pagina.lineas.add(linea);
 
-        return null;
-    }
+		return null;
+	}
 
-    @Override
-        public Object visit(H2 h2, Object param) {
+	/*
+	 * Se crea una línea para el h2 
+	 */
+	@Override
+	public Object visit(H2 h2, Object param) {
 
-        String texto = h2.h2;
-        Map<String, String> atributos = new HashMap<>();
+		String texto = h2.h2;
+		Map<String, String> atributos = new HashMap<>();
 
-        for (String a: this.atributos) {
-            String v = buscaParam.search("h2", a, userCssAst);
+		for (String a: this.atributos) {
+			String v = buscaParam.search("h2", a, hrefCssAst);
 
-            if (v == null) {
-                v = buscaParam.search("h2", a, defaultCssAst);
-            }
+			if (v == null) {
+				v = buscaParam.search("h2", a, defaultCssAst);
+			}
 
-            atributos.put(a ,v);
-        }
+			atributos.put(a ,v);
+		}
 
-        Linea linea = new Linea("h2", texto, atributos);
-        pagina.lineas.add(linea);
+		Linea linea = new Linea("h2", texto, atributos);
+		pagina.lineas.add(linea);
 
-        return null;
-    }
+		return null;
+	}
 
-    @Override
-    public Object visit(Title t, Object param) {
-        return null;
-    }
+	@Override
+	public Object visit(Title t, Object param) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    @Override
-    public Object visit(P p, Object param) {
+	/*
+	 * Se crea una línea para el p
+	 */
+	@Override
+	public Object visit(P p, Object param) {
 
-        List<Bloque> bloques = p.bloque;
-        Map<String, String> atributos = new HashMap<>();
-        Linea linea = null;
+		List<Bloque> bloques = p.bloque;
+		Map<String, String> atributos = new HashMap<>();
+		Linea linea = null;
 
-        for (String a: this.atributos) {
-            String v = buscaParam.search("p", a, userCssAst);
+		for (String a: this.atributos) {
+			String v = buscaParam.search("p", a, hrefCssAst);
 
-            if (v == null) {
-                v = buscaParam.search("p", a, defaultCssAst);
-            }
+			if (v == null) {
+				v = buscaParam.search("p", a, defaultCssAst);
+			}
 
-            atributos.put(a ,v);
-        }
+			atributos.put(a ,v);
+		}
 
-        for (Bloque b: bloques) {
-            linea = new Linea(b.getTipoText(), b.getText(), atributos);
-            pagina.lineas.add(linea);
-        }
+		for (Bloque b: bloques) {
+			linea = new Linea(b.getTipoText(), b.getText(), atributos);
+			pagina.lineas.add(linea);
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    @Override
-    public Object visit(Body b, Object param) {
+	@Override
+	public Object visit(Body b, Object param) {
 
-        List<Parrafo> parrafos = b.parrafo;
+		List<Parrafo> parrafos = b.parrafo;
 
-        for (Parrafo p: parrafos) {
-            p.accept(this, null);
-        }
+		for (Parrafo p: parrafos) {
+			p.accept(this, null);
+		}
 
-        return pagina;
-    }
+		return pagina;
+	}
 
-    @Override
-    public Object visit(Link l, Object param) {
-        return null;
-    }
+	@Override
+	public Object visit(Link l, Object param) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    @Override
-    public Object visit(Programa p, Object param) {
+	/*
+	 * Se crea la página con las líneas generadas en el body
+	 */
+	@Override
+	public Object visit(Programa p, Object param) {
 
-        Head head = p.head;
-        Body body = p.body;
-        Pagina pagina = new Pagina();
+		Head head = p.head;
+		Body body = p.body;
+		Pagina pagina = new Pagina();
 
-        head.accept(this, null);
-        pagina = (Pagina) body.accept(this, null);
+		head.accept(this, null);
+		pagina = (Pagina) body.accept(this, null);
 
-        return pagina;
-    }
+		return pagina;
+	}
 
-    @Override
-    public Object visit(Bloque b, Object param) {
-        return null;
-    }
+	@Override
+	public Object visit(Bloque b, Object param) {
+		return null;
+	}
 
 	@Override
 	public Object visit(BoldText b, Object param) {

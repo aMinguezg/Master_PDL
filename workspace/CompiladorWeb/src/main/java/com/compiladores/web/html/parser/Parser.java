@@ -30,6 +30,9 @@ public class Parser {
 		this.lex = lex;
 	}
 
+	/*
+	 * Busca un programa bien formado 
+	 */
 	public Programa parse () {
 		Programa prog = null;
 		Head head = null;
@@ -61,6 +64,9 @@ public class Parser {
 		return prog;
 	}
 
+	/*
+	 * Busca un head bien formado 
+	 */
 	Head parseHead(){
 		Head head = null;
 		Title titulo = null;
@@ -84,6 +90,9 @@ public class Parser {
 		return head;
 	}
 
+	/*
+	 * Busca un title bien formado 
+	 */
 	Title parseTitle(){
 		Title title = null;
 		String titulo = null;
@@ -107,6 +116,9 @@ public class Parser {
 		return title;
 	}
 
+	/*
+	 * Busca un link bien formado 
+	 */
 	Link parseLink(){
 		Link link = null;
 		String href = null;
@@ -179,6 +191,9 @@ public class Parser {
 		return link;
 	}
 
+	/*
+	 * Busca un body bien formado 
+	 */
 	Body parseBody(){
 		Body body = null;
 		List<Parrafo> parrafos = new ArrayList<Parrafo>();
@@ -207,6 +222,9 @@ public class Parser {
 		return body;
 	}
 
+	/*
+	 * Busca un parrafo bien formado 
+	 */
 	Parrafo parseParrafo(){
 		Parrafo parrafo = null;
 		Token token = lex.getToken();
@@ -245,6 +263,9 @@ public class Parser {
 
 	}
 
+	/*
+	 * Busca un h1 bien formado 
+	 */
 	H1 parseH1(){
 		H1 h1 = null;
 		String text = null;
@@ -263,6 +284,9 @@ public class Parser {
 		return h1;
 	}
 
+	/*
+	 * Busca un h2 bien formado 
+	 */
 	H2 parseH2(){
 		H2 h2 = null;
 		String text = null;
@@ -281,6 +305,9 @@ public class Parser {
 		return h2;
 	}
 
+	/*
+	 * Busca un p bien formado 
+	 */
 	P parseP(){
 		P p = null;
 
@@ -304,6 +331,9 @@ public class Parser {
 		return p;
 	}
 
+	/*
+	 * Busca un bloque bien formado 
+	 */
 	Bloque parseBloque(){
 		Bloque bloque = null;
 		Token token = lex.getToken();
@@ -347,6 +377,9 @@ public class Parser {
 
 	}
 
+	/*
+	 * Busca un b bien formado 
+	 */
 	BoldText parseBoldText(){
 		BoldText boldText = null;
 		String text = null;
@@ -366,6 +399,9 @@ public class Parser {
 		return boldText;
 	}
 
+	/*
+	 * Busca un i bien formado 
+	 */
 	ItalicText parseItalicText(){
 		ItalicText italicText = null;
 		String text = null;
@@ -385,6 +421,9 @@ public class Parser {
 		return italicText;
 	}
 
+	/*
+	 * Busca un u bien formado 
+	 */
 	UnderlText parseUnderlText(){
 		UnderlText underlText = null;
 		String text = null;

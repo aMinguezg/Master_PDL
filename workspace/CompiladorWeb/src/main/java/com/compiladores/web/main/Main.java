@@ -22,6 +22,7 @@ public class Main
     	Utils utils = new Utils();
         File file = utils.getFileFromResources("EX4.html");
         FileReader fileReader = new FileReader(file);
+        
         //Lexico y sintactico
         Lexicon lex = new Lexicon(fileReader);
         Parser parser = new Parser(lex);
